@@ -1,0 +1,82 @@
+services:
+  postgres-identity:
+    image: postgres:16-alpine
+    container_name: shopflow-postgres-identity
+    environment:
+      POSTGRES_DB: shopflow_identity
+      POSTGRES_USER: shopflow
+      POSTGRES_PASSWORD: shopflow_secret
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_identity_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopflow -d shopflow_identity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-catalog:
+    image: postgres:16-alpine
+    container_name: shopflow-postgres-catalog
+    environment:
+      POSTGRES_DB: shopflow_catalog
+      POSTGRES_USER: shopflow
+      POSTGRES_PASSWORD: shopflow_secret
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_catalog_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopflow -d shopflow_catalog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-orders:
+    image: postgres:16-alpine
+    container_name: shopflow-postgres-orders
+    environment:
+      POSTGRES_DB: shopflow_orders
+      POSTGRES_USER: shopflow
+      POSTGRES_PASSWORD: shopflow_secret
+    ports:
+      - "5435:5432"
+    volumes:
+      - pg_orders_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopflow -d shopflow_orders"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: shopflow-redis
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: shopflow-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: shopflow
+      RABBITMQ_DEFAULT_PASS: shopflow_secret
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_identity_data:
+  pg_catalog_data:
+  pg_orders_data:

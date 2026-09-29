@@ -1,0 +1,6 @@
+@ShopFlow.Basket_HostAddress = http://localhost:5204
+
+GET {{ShopFlow.Basket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
