@@ -165,3 +165,35 @@ Default role: `Customer`. Roles `Customer` and `Admin` are seeded on startup.
 **JWT settings** (shared secret for other services later): see `Jwt` section in Identity `appsettings.json`.
 
 Database: PostgreSQL on port **5433** (`shopflow_identity`).
+
+---
+
+## Milestone 3 – Catalog Service
+
+**Base URL:** `http://localhost:5102`  
+**Via Gateway:** `http://localhost:5100/catalog`
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | /api/v1/products | Public | List products (search, category, pagination) |
+| GET | /api/v1/products/{id} | Public | Get product by ID |
+| POST | /api/v1/products | Admin JWT | Create product |
+| PUT | /api/v1/products/{id} | Admin JWT | Update product |
+| DELETE | /api/v1/products/{id} | Admin JWT | Soft-deactivate product |
+
+- **Own database:** PostgreSQL port **5434** (`shopflow_catalog`)
+- Seed products on first run
+- JWT validated with the **same key/issuer/audience** as Identity (no shared DB)
+
+**Create product example**
+
+```json
+{
+  "name": "Mechanical Keyboard",
+  "description": "RGB mechanical keyboard",
+  "sku": "KEY-001",
+  "price": 89.99,
+  "stockQuantity": 40,
+  "category": "Electronics"
+}
+```
