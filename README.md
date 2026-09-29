@@ -135,3 +135,33 @@ These are documented so the project stays honest and interview-defensible.
 ## License
 
 MIT – portfolio demonstration.
+
+---
+
+## Milestone 2 – Identity Service
+
+**Base URL (direct):** `http://localhost:5101`  
+**Via Gateway:** `http://localhost:5100/identity`
+
+| Method | Endpoint            | Auth   | Description        |
+|--------|---------------------|--------|--------------------|
+| POST   | /api/v1/auth/register | Public | Register customer  |
+| POST   | /api/v1/auth/login    | Public | Login, get JWT     |
+| GET    | /api/v1/auth/me       | Bearer | Current user       |
+
+**Register body**
+
+```json
+{
+  "email": "customer@example.com",
+  "password": "SecureP@ss1",
+  "firstName": "Ada",
+  "lastName": "Lovelace"
+}
+```
+
+Default role: `Customer`. Roles `Customer` and `Admin` are seeded on startup.
+
+**JWT settings** (shared secret for other services later): see `Jwt` section in Identity `appsettings.json`.
+
+Database: PostgreSQL on port **5433** (`shopflow_identity`).
