@@ -197,3 +197,35 @@ Database: PostgreSQL on port **5433** (`shopflow_identity`).
   "category": "Electronics"
 }
 ```
+
+---
+
+## Milestone 4 – Basket Service
+
+**Base URL:** `http://localhost:5103`  
+**Via Gateway:** `http://localhost:5100/basket`
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | /api/v1/basket | Bearer | Get current user's basket |
+| POST | /api/v1/basket/items | Bearer | Add item (or increase qty) |
+| PUT | /api/v1/basket/items/{productId} | Bearer | Update quantity |
+| DELETE | /api/v1/basket/items/{productId} | Bearer | Remove item |
+| DELETE | /api/v1/basket | Bearer | Clear basket |
+
+- **Storage:** Redis on port **6380** (polyglot persistence — not PostgreSQL)
+- Basket key: `basket:{userId}`, TTL 7 days
+- Requires JWT from Identity (user id from token claims)
+
+**Add item example**
+
+```json
+{
+  "productId": "00000000-0000-0000-0000-000000000001",
+  "productName": "Wireless Mouse",
+  "unitPrice": 29.99,
+  "quantity": 2
+}
+```
+
+Use product ids from Catalog (`GET /api/v1/products`).
