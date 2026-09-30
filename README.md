@@ -1,6 +1,6 @@
 # ShopFlow – E-commerce Microservices
 
-Portfolio-grade e-commerce microservices system demonstrating **service boundaries**, **database-per-service**, **API Gateway with YARP**, and **asynchronous messaging with MassTransit and RabbitMQ**.
+E-commerce microservices system demonstrating **service boundaries**, **database-per-service**, **API Gateway with YARP**, and **asynchronous messaging with MassTransit and RabbitMQ**.
 
 **Tech Stack:** .NET 9 · ASP.NET Core · YARP · MassTransit · RabbitMQ · PostgreSQL · Redis · EF Core · JWT · Docker Compose
 
